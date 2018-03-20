@@ -1,9 +1,15 @@
 package blog2018;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Blog {
     private List<Note> notes = new ArrayList();
@@ -53,8 +59,8 @@ public class Blog {
         Comment result = allComments.get(0);
         for(Comment comment : allComments)
         {
-            LocalDate d1 = comment.getDate();
-            LocalDate d2 = result.getDate();
+            LocalDateTime d1 = comment.getDate();
+            LocalDateTime d2 = result.getDate();
             if(d1.isAfter(d2))
             {
                 result = comment;
@@ -81,9 +87,27 @@ public class Blog {
         }*/
         return result;
     }
-    public List<Comment> lastComments()
+    public Collection<Comment> lastComments()
     {
-        return null;
+         SortedSet<Comment> allComments = new TreeSet(Collections.reverseOrder());
+         for(Note note : notes)
+         {
+             allComments.addAll(note.getComments());
+         }
+         Collection<Comment> result = new ArrayList();
+         Iterator<Comment> it = allComments.iterator();
+         for(int i=0;i<5;i++)
+         {
+           if(it.hasNext())
+           {
+               Comment c = it.next();
+               result.add(c);
+           }
+       
+         }
+           return result;
+         
+      
     }
 
 }

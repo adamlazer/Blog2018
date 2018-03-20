@@ -6,15 +6,21 @@
 package blog2018;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class Comment {
+public class Comment implements Comparable<Comment>{
     private String author,content;
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Comment(String author, String content) {
         this.author = author;
         this.content = content;
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
+    }
+    public Comment(String author, String content,LocalDateTime date) {
+        this.author = author;
+        this.content = content;
+        this.date = date;
     }
 
     public String getAuthor() {
@@ -25,13 +31,18 @@ public class Comment {
         return content;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
     
     public String toString()
     {
         return author+": "+content+" ("+date+")";
+    }
+
+    @Override
+    public int compareTo(Comment comment) {
+       return date.compareTo(comment.date);
     }
     
 }
